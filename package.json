@@ -1,6 +1,6 @@
 {
   "name": "contravariant",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Contravariant functors in JS with Flow.",
   "main": "dist/index.js",
   "scripts": {
