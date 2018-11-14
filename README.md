@@ -37,6 +37,8 @@ $ npm install contravariant
 - `getComparison(): (A, A) => number`
 - `contramap<B>(fn: B => A): Comparison<B>`
 
+`function defaultComparison(): Comparison<number>`
+
 ---
 
 `class Equivalence<-A>`
@@ -44,6 +46,8 @@ $ npm install contravariant
 - `constructor(f: (A, A) => boolean)`
 - `getEquivalence(): (A, A) => boolean`
 - `contramap<B>(fn: B => A): Equivalence<B>`
+
+`function defaultEquivalence<A>(): Equivalence<A>`
 
 ---
 
