@@ -1,0 +1,4 @@
+dist/
+flow-typed/
+test/
+jest.config.js
