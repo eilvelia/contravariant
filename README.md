@@ -9,6 +9,12 @@ Mainly inspired by haskell [contravariant](https://hackage.haskell.org/package/c
 
 See [src/index.js](src/index.js).
 
+## Installation
+
+```console
+$ npm install contravariant
+```
+
 ## API
 
 `interface IContravariant<-A>`
