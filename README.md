@@ -7,7 +7,7 @@ Contravariant functors in JavaScript with [Flow](https://flow.org/).
 
 Mainly inspired by haskell [contravariant](https://hackage.haskell.org/package/contravariant).
 
-See [src/index.js](src/index.js).
+See [src/index.js](src/index.js) and [test/index.test.js](test/index.test.js).
 
 ## Installation
 
@@ -57,9 +57,29 @@ $ npm install contravariant
 - `getOp(): B => A`
 - `contramap<BB>(fn: BB => B): Op<A, BB>`
 
+---
+
+### Profunctors
+
+`interface IProfunctor<-B, +C>`
+
+- `promap<A, D>(fn1: A => B, fn2: C => D): IProfunctor<A, D>`
+
+---
+
+`class Arrow<-B, +C>`
+
+- `constructor(f: B => C)`
+- `getArrow(): B => C`
+- `promap<A, D>(fn1: A => B, fn2: C => D): Arrow<A, D>`
+- `lmap<A>(fn1: A => B): Arrow<A, C>`
+- `rmap<D>(fn2: C => D): Arrow<B, D>`
+
 ## See also
 
 - https://hackage.haskell.org/package/contravariant-1.5/docs/Data-Functor-Contravariant.html
 - https://github.com/fantasyland/fantasy-land#contravariant
 - https://gist.github.com/Bannerets/07a71802e3468d252924091a65ac2b3c
 - https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/profunctors
+- https://hackage.haskell.org/package/profunctors-5.3/docs/Data-Profunctor.html
+- https://github.com/fantasyland/fantasy-land#profunctor

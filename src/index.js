@@ -113,3 +113,28 @@ export type Profunctor<-B, +C> = {
 export interface IProfunctor<-B, +C> {
   promap<A, D>(fn1: A => B, fn2: C => D): IProfunctor<A, D>
 }
+
+// ---
+
+export class Arrow<-B, +C> implements IProfunctor<B, C> {
+  +f: B => C
+
+  constructor(f: B => C) { this.f = f }
+
+  getArrow(): B => C { return this.f }
+
+  promap<A, D>(fn1: A => B, fn2: C => D): Arrow<A, D> {
+    return new Arrow(a => fn2(this.f(fn1(a))) )
+  }
+
+  lmap<A>(fn1: A => B): Arrow<A, C> {
+    return this.promap(fn1, x => x)
+  }
+
+  rmap<D>(fn2: C => D): Arrow<B, D> {
+    return this.promap(x => x, fn2)
+  }
+
+  // $FlowFixMe
+  [FL.promap] = this.promap
+}

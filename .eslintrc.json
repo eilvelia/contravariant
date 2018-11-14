@@ -10,6 +10,7 @@
   "rules": {
     "indent": 0,
     "indent-legacy": [2, 2, { "SwitchCase": 1 }],
-    "space-before-function-paren": 0
+    "space-before-function-paren": 0,
+    "space-in-parens": 0
   }
 }

@@ -1,24 +1,32 @@
 // @flow
 
 import {
+  type Contravariant,
+  type IContravariant,
   Predicate,
   Comparison,
+  defaultComparison,
   Equivalence,
   defaultEquivalence,
   Op,
+  Arrow,
 } from '../src'
 
 describe('Predicate', () => {
   /*::
-  const isEven: Predicate<number> = new Predicate(x => x % 2 === 0)
-  const isEvenStr = isEven.contramap(parseInt)
-  const pred: string => boolean = isEvenStr.getPredicate()
-  const bool: boolean = pred('2')
+  const _isEven: Predicate<number> = new Predicate(x => x % 2 === 0)
+  const _isEvenStr = _isEven.contramap(parseInt)
+  const _pred: string => boolean = _isEvenStr.getPredicate()
+  const _bool: boolean = _pred('2')
   // $ExpectError
-  pred(2)
+  _pred(2)
   // $ExpectError
-  isEven.getPredicate()('2')
-  isEven.getPredicate()(2)
+  _isEven.getPredicate()('2')
+  _isEven.getPredicate()(2)
+  ;(_isEven: Contravariant<number>)
+  ;(_isEven: IContravariant<number>)
+  // $ExpectError
+  ;(_isEven: IContravariant<string>)
   */
 
   test('basic', () => {
@@ -31,6 +39,12 @@ describe('Predicate', () => {
     const isEvenPred = isEven.getPredicate()
     expect(isEvenPred(90)).toBe(true)
     expect(isEvenPred(91)).toBe(false)
+  })
+
+  test('fantasy-land', () => {
+    const p = new Predicate(_ => true)
+    // $FlowFixMe
+    expect(p['fantasy-land/contramap']).toBe(p.contramap)
   })
 })
 
@@ -103,5 +117,79 @@ describe('Equivalence', () => {
     expect(f1(80, 80)).toBe(f2(80, 80))
     const rand = Math.random()
     expect(f1(rand, rand)).toBe(f2(rand, rand))
+  })
+})
+
+describe('Arrow', () => {
+  /*::
+  const _arrow1 = new Arrow(x => x.toString())
+  const _arrow2 = _arrow1.promap(x => x + 2, str => str + 'abc')
+  const _arrow3 = _arrow2.promap(x => x * 3, str => str + 'def')
+  const _arrow4 = _arrow3.promap((x: string) => parseInt(x), str => str + 'def')
+  const _fn = _arrow4.getArrow()
+  const _result = _fn('3')
+  ;(_arrow1: Arrow<number, string>)
+  ;(_arrow2: Arrow<number, string>)
+  ;(_arrow3: Arrow<number, string>)
+  ;(_arrow4: Arrow<string, string>)
+  ;(_fn: string => string)
+  ;(_result: string)
+  // $ExpectError
+  ;(_result: number)
+  */
+
+  test('basic', () => {
+    const arrow1 = new Arrow((x: number): string => x.toString())
+
+    const arrow2 = arrow1.promap(x => x + 2, str => str + 'abc')
+    const arrow3 = arrow2.promap(x => x * 3, str => str + 'def')
+
+    const fn = arrow3.getArrow()
+
+    const result = fn(3)
+
+    expect(result).toBe('11abcdef')
+  })
+
+  test('identity', () => {
+    const p1 = new Arrow((x: number) => x.toString())
+    const p2 = p1.promap(a => a, b => b)
+
+    const f1 = p1.getArrow()
+    const f2 = p2.getArrow()
+
+    expect(f1(2)).toBe(f2(2))
+    expect(f1(5)).toBe(f2(5))
+    expect(f1(6)).toBe('6')
+    expect(f2(6)).toBe('6')
+    const rand = Math.random()
+    expect(f1(rand)).toBe(f2(rand))
+  })
+
+  test('composition', () => {
+    const f = x => x + 2
+    const g = x => x * 3
+    const i = str => str + 'abc'
+    const h = str => str + 'def'
+
+    const p = new Arrow((x: number) => x.toString())
+
+    const p1 = p.promap(a => f(g(a)), b => h(i(b)))
+    const p2 = p.promap(f, i).promap(g, h)
+
+    const f1 = p1.getArrow()
+    const f2 = p2.getArrow()
+
+    expect(f1(3)).toBe(f2(3))
+    expect(f1(0)).toBe(f2(0))
+    expect(f1(5)).toBe(f2(5))
+    const rand = Math.random()
+    expect(f1(rand)).toBe(f2(rand))
+  })
+
+  test('fantasy-land', () => {
+    const p = new Arrow(_ => true)
+    // $FlowFixMe
+    expect(p['fantasy-land/promap']).toBe(p.promap)
   })
 })
