@@ -78,8 +78,9 @@ $ npm install contravariant
 ## See also
 
 - https://hackage.haskell.org/package/contravariant-1.5/docs/Data-Functor-Contravariant.html
-- https://github.com/fantasyland/fantasy-land#contravariant
 - https://gist.github.com/Bannerets/07a71802e3468d252924091a65ac2b3c
 - https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/profunctors
+- https://www.fpcomplete.com/blog/2016/11/covariance-contravariance
 - https://hackage.haskell.org/package/profunctors-5.3/docs/Data-Profunctor.html
+- https://github.com/fantasyland/fantasy-land#contravariant
 - https://github.com/fantasyland/fantasy-land#profunctor
