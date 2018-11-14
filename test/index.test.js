@@ -16,14 +16,21 @@ describe('Predicate', () => {
   const bool: boolean = pred('2')
   // $ExpectError
   pred(2)
+  // $ExpectError
+  isEven.getPredicate()('2')
+  isEven.getPredicate()(2)
   */
 
   test('basic', () => {
     const isEven = new Predicate(x => x % 2 === 0)
     const isEvenStr = isEven.contramap(parseInt)
     const pred = isEvenStr.getPredicate()
-    const bool = pred('2')
-    expect(bool).toBe(true)
+    expect(pred('2')).toBe(true)
+    expect(pred('3')).toBe(false)
+    expect(pred('900')).toBe(true)
+    const isEvenPred = isEven.getPredicate()
+    expect(isEvenPred(90)).toBe(true)
+    expect(isEvenPred(91)).toBe(false)
   })
 })
 
