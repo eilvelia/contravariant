@@ -69,6 +69,7 @@ describe('Equivalence', () => {
     expect(f1(4, 4)).toBe(false)
 
     expect(f2(1, 4)).toBe(false)
+    expect(f2(4, 1)).toBe(false)
     expect(f2(4, 4)).toBe(false)
   })
 
@@ -79,15 +80,16 @@ describe('Equivalence', () => {
     const f1 = eq1.getEquivalence()
     const f2 = eq2.getEquivalence()
 
-    expect(f1(24)).toBe(f2(24))
-    expect(f1('str')).toBe(f2('str'))
+    expect(f1(24, 25)).toBe(f2(24, 25))
+    expect(f1('str', 'str')).toBe(f2('str', 'str'))
     const rand = Math.random().toString()
-    expect(f1(rand)).toBe(f2(rand))
+    const rand2 = Math.random().toString()
+    expect(f1(rand, rand2)).toBe(f2(rand, rand2))
   })
 
   test('composition', () => {
-    const f = x => x.toString()
-    const g = x => x + 2
+    const f = (x: number): string => x.toString()
+    const g = (x: number): number => x + 2
 
     const u = defaultEquivalence()
 
@@ -97,9 +99,9 @@ describe('Equivalence', () => {
     const f1 = eq1.getEquivalence()
     const f2 = eq2.getEquivalence()
 
-    expect(f1(52)).toBe(f2(52))
-    expect(f1('a')).toBe(f2('a'))
-    const rand = Math.random().toString()
-    expect(f1(rand)).toBe(f2(rand))
+    expect(f1(52, 24)).toBe(f2(52, 24))
+    expect(f1(80, 80)).toBe(f2(80, 80))
+    const rand = Math.random()
+    expect(f1(rand, rand)).toBe(f2(rand, rand))
   })
 })
