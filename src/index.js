@@ -14,7 +14,7 @@ export type Contravariant<-A> = {
 }
 
 export interface IContravariant<-A> {
-  contramap<B>(fn: B => A): Contravariant<B>
+  contramap<B>(fn: B => A): IContravariant<B>
 }
 
 // ---
@@ -111,5 +111,5 @@ export type Profunctor<-B, +C> = {
 }
 
 export interface IProfunctor<-B, +C> {
-  dimap<A, D>(fn1: A => B, fn2: C => D): Profunctor<A, D>
+  dimap<A, D>(fn1: A => B, fn2: C => D): IProfunctor<A, D>
 }

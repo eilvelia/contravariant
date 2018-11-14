@@ -13,7 +13,7 @@ See [src/index.js](src/index.js).
 
 `interface IContravariant<-A>`
 
-- `contramap<B>(fn: B => A): Contravariant<B>`
+- `contramap<B>(fn: B => A): IContravariant<B>`
 
 ---
 
