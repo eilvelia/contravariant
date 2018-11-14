@@ -2,7 +2,7 @@
 
 const FL = {
   contramap: 'fantasy-land/contramap',
-  profunctor: 'fantasy-land/profunctor'
+  promap: 'fantasy-land/promap'
 }
 
 // ---
@@ -94,7 +94,7 @@ export class Op<+A, -B> implements IContravariant<B> {
   getOp(): B => A { return this.f }
 
   contramap<BB>(fn: BB => B): Op<A, BB> {
-    return new Op(b => this.f(fn(b)))
+    return new Op(bb => this.f(fn(bb)))
   }
 
   // $FlowFixMe
@@ -107,9 +107,9 @@ export class Op<+A, -B> implements IContravariant<B> {
 // https://github.com/fantasyland/fantasy-land#profunctor
 
 export type Profunctor<-B, +C> = {
-  dimap<A, D>(fn1: A => B, fn2: C => D): Profunctor<A, D>
+  promap<A, D>(fn1: A => B, fn2: C => D): Profunctor<A, D>
 }
 
 export interface IProfunctor<-B, +C> {
-  dimap<A, D>(fn1: A => B, fn2: C => D): IProfunctor<A, D>
+  promap<A, D>(fn1: A => B, fn2: C => D): IProfunctor<A, D>
 }
